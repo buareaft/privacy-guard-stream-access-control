@@ -192,8 +192,8 @@ public class PrivacyGuardService {
 
     private void seed() {
         LocalDateTime now = LocalDateTime.now().withSecond(0).withNano(0);
-        DataStream heart = createStream("Sensor-A01", "心率监测流", "可穿戴设备实时采集心率数据", now.minusHours(6), now);
-        DataStream temp = createStream("Sensor-B12", "环境温度流", "园区传感器采集环境温度", now.minusHours(6), now);
+        DataStream heart = createStream("ABC", "心率监测流", "可穿戴设备实时采集心率数据", now.minusHours(6), now);
+        DataStream temp = createStream("ABC", "环境温度流", "园区传感器采集环境温度", now.minusHours(6), now);
         generateEncryptedRecords(heart, 48);
         generateEncryptedRecords(temp, 48);
         addPolicy(heart, "consumer", now.minusHours(4), now.minusHours(1), 4, true);

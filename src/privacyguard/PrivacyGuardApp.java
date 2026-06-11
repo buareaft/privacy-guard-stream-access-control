@@ -60,7 +60,6 @@ public class PrivacyGuardApp {
     private final CardLayout controllerCards = new CardLayout();
     private final JPanel controllerContent = new JPanel(controllerCards);
 
-    private final JComboBox<DataStream> ownerBasicStream = new JComboBox<>();
     private final JComboBox<DataStream> uploadStream = new JComboBox<>();
     private final JComboBox<DataStream> policyStream = new JComboBox<>();
     private final JComboBox<DataStream> infoStream = new JComboBox<>();
@@ -87,11 +86,11 @@ public class PrivacyGuardApp {
         setLookAndFeel();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(root);
-        root.add(loginPanel("数据拥有者登录", "owner", "1001", "loginOwner"), "loginOwner");
-        root.add(loginPanel("数据消费者登录", "consumer", "1101", "loginConsumer"), "loginConsumer");
-        root.add(appShell("数据拥有者系统", "1001", "MING", ownerContent, true), "owner");
-        root.add(appShell("数据消费者系统", "1101", "Consumer1", consumerContent, false), "consumer");
-        root.add(appShell("隐私控制器", "9001", "Controller", controllerContent, false), "controller");
+        root.add(loginPanel("数据拥有者登录", "owner", "0001", "loginOwner"), "loginOwner");
+        root.add(loginPanel("数据消费者登录", "consumer", "0001", "loginConsumer"), "loginConsumer");
+        root.add(appShell("数据拥有者系统", "0001", "ABC", ownerContent, true), "owner");
+        root.add(appShell("数据消费者系统", "0001", "Consumer1", consumerContent, false), "consumer");
+        root.add(appShell("隐私控制器", "0001", "Controller", controllerContent, false), "controller");
         buildOwnerPages();
         buildConsumerPages();
         buildControllerPages();
@@ -292,7 +291,7 @@ public class PrivacyGuardApp {
         JPanel page = titledPage("基本设置");
         JPanel device = group("设备信息");
         addLine(device, 0,
-                formLabel("设备id:"), ownerBasicStream,
+                formLabel("设备id:"), readOnly("ABC"),
                 formLabel("设备名称:"), readOnly("心率传感器"),
                 formLabel("设备端口号:"), readOnly("9023"),
                 formLabel("设备ip:"), readOnly("192.168.128.3"));
@@ -314,7 +313,7 @@ public class PrivacyGuardApp {
         addLine(stream, 4, formLabel("更高粒度:"), high);
         addButtonLine(stream, 5, create, upload);
         create.addActionListener(event -> {
-            DataStream created = service.createStream("Sensor-A01", name.getText(), String.valueOf(type.getSelectedItem()), start.value(), end.value());
+            DataStream created = service.createStream("ABC", name.getText(), String.valueOf(type.getSelectedItem()), start.value(), end.value());
             refreshAll();
             JOptionPane.showMessageDialog(frame, "成功创建流！", "消息", JOptionPane.INFORMATION_MESSAGE);
             policyStream.setSelectedItem(created);
@@ -639,7 +638,6 @@ public class PrivacyGuardApp {
     }
 
     private void refreshAll() {
-        refreshCombo(ownerBasicStream);
         refreshCombo(uploadStream);
         refreshCombo(policyStream);
         refreshCombo(infoStream);
