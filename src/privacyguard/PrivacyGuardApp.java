@@ -500,7 +500,7 @@ public class PrivacyGuardApp {
     private JButton primaryButton(String text) {
         JButton button = new JButton(text);
         button.setBackground(PRIMARY);
-        button.setForeground(Color.WHITE);
+        button.setForeground(Color.BLACK);
         button.setFocusPainted(false);
         button.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 14));
         return button;
@@ -509,7 +509,7 @@ public class PrivacyGuardApp {
     private JButton secondaryButton(String text) {
         JButton button = new JButton(text);
         button.setBackground(ACCENT);
-        button.setForeground(Color.WHITE);
+        button.setForeground(Color.BLACK);
         button.setFocusPainted(false);
         return button;
     }
@@ -517,7 +517,7 @@ public class PrivacyGuardApp {
     private JButton dangerButton(String text) {
         JButton button = new JButton(text);
         button.setBackground(new Color(190, 70, 70));
-        button.setForeground(Color.WHITE);
+        button.setForeground(Color.BLACK);
         button.setFocusPainted(false);
         return button;
     }
