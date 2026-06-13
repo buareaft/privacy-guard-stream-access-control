@@ -198,7 +198,7 @@ public class PrivacyGuardApp {
         }
         side.add(top, BorderLayout.NORTH);
 
-        JButton logout = actionButton("⇱ 退出登录");
+        JButton logout = actionButton("退出登录");
         logout.setPreferredSize(new Dimension(132, 36));
         logout.addActionListener(event -> {
             frame.setTitle(SYSTEM_TITLE);
@@ -218,11 +218,11 @@ public class PrivacyGuardApp {
     private JPanel ownerMenu() {
         JPanel grid = new JPanel(new GridLayout(3, 2, 8, 12));
         grid.setOpaque(false);
-        grid.add(nav("▷ 导航主页", () -> ownerCards.show(ownerContent, "home")));
-        grid.add(nav("▣ 生产者管理", () -> ownerCards.show(ownerContent, "producer")));
-        grid.add(nav("▤ 安全加密", () -> ownerCards.show(ownerContent, "encrypt")));
-        grid.add(nav("⇧ 密文上传", () -> ownerCards.show(ownerContent, "upload")));
-        grid.add(nav("◼ 存储内容", () -> ownerCards.show(ownerContent, "storage")));
+        grid.add(nav("导航主页", () -> ownerCards.show(ownerContent, "home")));
+        grid.add(nav("生产者管理", () -> ownerCards.show(ownerContent, "producer")));
+        grid.add(nav("安全加密", () -> ownerCards.show(ownerContent, "encrypt")));
+        grid.add(nav("密文上传", () -> ownerCards.show(ownerContent, "upload")));
+        grid.add(nav("存储内容", () -> ownerCards.show(ownerContent, "storage")));
         return grid;
     }
 
