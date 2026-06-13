@@ -85,6 +85,7 @@ public class PrivacyGuardApp {
         JButton login = actionButton("登录");
         JButton exit = actionButton("退出");
         JButton register = actionButton("注册");
+        JButton switchRole = actionButton("owner".equals(role) ? "数据消费者登录" : "数据拥有者登录");
 
         login.addActionListener(event -> {
             boolean ok = "0001".equals(account.getText().trim()) && "123456".equals(new String(password.getPassword()));
@@ -97,6 +98,7 @@ public class PrivacyGuardApp {
         });
         exit.addActionListener(event -> frame.dispose());
         register.addActionListener(event -> JOptionPane.showMessageDialog(frame, "演示系统使用内置账号，无需注册。", "消息", JOptionPane.INFORMATION_MESSAGE));
+        switchRole.addActionListener(event -> rootCards.show(root, "owner".equals(role) ? "loginConsumer" : "loginOwner"));
 
         GridBagConstraints c = gbc();
         c.gridwidth = 4;
@@ -130,6 +132,11 @@ public class PrivacyGuardApp {
         c.gridx = 3;
         c.insets = new Insets(26, 8, 7, 8);
         box.add(register, c);
+        c.gridx = 0;
+        c.gridy++;
+        c.gridwidth = 4;
+        c.insets = new Insets(16, 8, 7, 8);
+        box.add(switchRole, c);
         page.add(box);
         return page;
     }
@@ -137,7 +144,7 @@ public class PrivacyGuardApp {
     private JPanel ownerShell() {
         JPanel page = new JPanel(new BorderLayout());
         page.setBackground(PAGE);
-        page.add(sidebar("0001", "ABC", "数据拥有者", ownerMenu(), "loginOwner"), BorderLayout.WEST);
+        page.add(sidebar("0001", "ABC", "数据拥有者/数据输入者", ownerMenu(), "loginOwner"), BorderLayout.WEST);
         ownerContent.setBackground(PAGE);
         page.add(ownerContent, BorderLayout.CENTER);
         return page;
