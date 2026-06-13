@@ -41,7 +41,6 @@ public class PrivacyGuardApp {
     private static final Color BORDER = new Color(142, 142, 142);
     private static final Color FIELD = new Color(244, 248, 252);
 
-    private final PrivacyGuardService service = new PrivacyGuardService();
     private final JFrame frame = new JFrame(SYSTEM_TITLE);
     private final CardLayout rootCards = new CardLayout();
     private final JPanel root = new JPanel(rootCards);
@@ -93,7 +92,6 @@ public class PrivacyGuardApp {
                 JOptionPane.showMessageDialog(frame, "账号或密码错误！", "消息", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-            service.login("owner".equals(role) ? "数据拥有者" : "数据消费者", role, "123456");
             frame.setTitle("owner".equals(role) ? "数据拥有者系统" : "推理结果查询界面");
             rootCards.show(root, "owner".equals(role) ? "owner" : "consumer");
         });
