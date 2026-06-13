@@ -49,8 +49,6 @@ public class PrivacyGuardApp {
 
     private final DefaultTableModel storageModel = new DefaultTableModel(
             new String[]{"输入编号", "输入名称", "密文状态", "目标服务器", "上传时间"}, 0);
-    private final DefaultTableModel inferenceModel = new DefaultTableModel(
-            new String[]{"任务编号", "结果编号", "推理状态", "处理时间", "结果内容"}, 0);
     private final JTextArea resultText = area();
 
     public void show() {
@@ -372,18 +370,16 @@ public class PrivacyGuardApp {
 
     private JPanel consumerQueryPage() {
         JPanel page = titledPage("推理结果查询界面");
-        JPanel intro = group("界面说明");
+        JPanel intro = group("功能说明");
         JTextArea text = area();
         text.setFont(font(Font.PLAIN, 15));
         text.setText("""
                 该界面面向数据消费者，用于查看由数据拥有者共享的密文推理结果。
-                数据消费者不直接参与数据加密与推理发起过程，而是在获得共享结果后，
-                通过界面查询相关任务的推理状态与输出结果。
-
+                数据消费者不直接参与数据加密与推理发起过程，而是在获得共享结果后，通过界面查询相关任务的推理状态与输出结果。
                 推理任务：对应发起密文推理请求。
                 结果查询：对应查看推理状态、推理结果。
                 """);
-        addTextResult(intro, 0, text, 145);
+        addTextResult(intro, 0, text, 105);
 
         JPanel task = group("任务创建区");
         JTextField taskId = field("INF-001");
@@ -395,21 +391,22 @@ public class PrivacyGuardApp {
         addLine(task, 1, label("提交时间："), submitTime, query, reset);
 
         JPanel result = group("结果展示区");
-        JTable table = new JTable(inferenceModel);
-        table.setRowHeight(26);
-        addTextResult(result, 0, resultText, 150);
-        GridBagConstraints c = gbc();
-        c.gridx = 0;
-        c.gridy = 3;
-        c.gridwidth = 8;
-        c.weightx = 1;
-        c.weighty = 1;
-        c.fill = GridBagConstraints.BOTH;
-        JScrollPane tablePane = new JScrollPane(table);
-        tablePane.setPreferredSize(new Dimension(880, 210));
-        result.add(tablePane, c);
+        JTextField resultTaskId = field("INF-001");
+        JTextField resultId = field("RES-001");
+        JTextField state = field("已完成");
+        JTextField elapsed = field("2.41s");
+        JTextField content = field("***");
+        addLine(result, 0, label("任务编号："), resultTaskId, label("结果编号："), resultId);
+        addLine(result, 1, label("推理状态："), state, label("处理时间："), elapsed);
+        addLine(result, 2, label("结果内容："), content);
+        addTextResult(result, 3, resultText, 220);
 
         query.addActionListener(event -> {
+            resultTaskId.setText(taskId.getText());
+            resultId.setText("RES-001");
+            state.setText("已完成");
+            elapsed.setText("2.41s");
+            content.setText("***");
             resultText.setText(inferenceText());
             JOptionPane.showMessageDialog(frame, "查询完成！", "消息", JOptionPane.INFORMATION_MESSAGE);
         });
@@ -417,6 +414,11 @@ public class PrivacyGuardApp {
             taskId.setText("INF-001");
             object.setText("Prompt_01 / CipherInput");
             submitTime.setText(now());
+            resultTaskId.setText("");
+            resultId.setText("");
+            state.setText("");
+            elapsed.setText("");
+            content.setText("");
             resultText.setText("");
         });
 
@@ -462,9 +464,6 @@ public class PrivacyGuardApp {
         storageModel.addRow(new Object[]{"IN-002", "Prompt_02", "已上传", "CipherStore-Server-01", "2026-06-13 18:22:45"});
         storageModel.addRow(new Object[]{"IN-003", "Prompt_03", "待上传", "CipherStore-Server-01", "2026-06-13 18:24:09"});
 
-        inferenceModel.addRow(new Object[]{"INF-001", "RES-001", "已完成", "2.41s", "***"});
-        inferenceModel.addRow(new Object[]{"INF-002", "RES-002", "处理中", "0.86s", "待返回"});
-        inferenceModel.addRow(new Object[]{"INF-003", "RES-003", "已完成", "3.12s", "***"});
     }
 
     private String inferenceText() {
